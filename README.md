@@ -94,8 +94,51 @@ class Program
     }
 }
 
+✅ Thread-Safe Singleton (Lock-based)
+----------------------------------------
+Only one thread will enter multiple thread cannot enter thats why we have used lock
 
+public sealed class Singleton
+{
+    // Step 1: Create a static instance variable
+    private static Singleton _instance;
+    private static readonly object _lock = new object();
 
+    // Step 2: Private constructor so no one can create object with "new"
+    private Singleton() { }
+
+    // Step 3: Public static property with thread safety
+    public static Singleton Instance
+    {
+        get
+        {
+            lock (_lock) // ensures only one thread at a time can enter
+            {
+                if (_instance == null)
+                    _instance = new Singleton();
+                return _instance;
+            }
+        }
+    }
+
+    public void ShowMessage()
+    {
+        Console.WriteLine("Hello from Thread-Safe Singleton (lock version)!");
+    }
+}
+
+// Usage
+class Program
+{
+    static void Main()
+    {
+        var obj1 = Singleton.Instance;
+        var obj2 = Singleton.Instance;
+
+        obj1.ShowMessage();
+        Console.WriteLine(obj1 == obj2); // True
+    }
+}
 
 
 
