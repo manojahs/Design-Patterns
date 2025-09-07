@@ -55,7 +55,11 @@ class Program
 }
 
 
-
+🔑 Key Points (Easy Explanation for Interview):
+Private constructor → prevents new Singleton().
+Static variable → holds only one object.
+Static property → returns that single object.
+When you call Singleton.Instance, it always gives the same object.
 
 
 
