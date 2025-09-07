@@ -148,92 +148,11 @@ public sealed class Singleton
     }
 }
 
-Factory Pattern
+Simple Factory Pattern
 -------------------
 Encapsulation → Hides object creation logic.
 Loose Coupling → Client depends on abstraction, not concrete classes.
 Open/Closed Principle → Easy to add new product types without changing client code.
-
-
-problem
-----------
-
-public class EmailNotification
-{
-    public void Send(string message)
-    {
-        Console.WriteLine($"Email: {message}");
-    }
-}
-
-public class SMSNotification
-{
-    public void Send(string message)
-    {
-        Console.WriteLine($"SMS: {message}");
-    }
-}
-Problem is suppose we are creating notification service now we have a question whether to use emailnotification or smsnotification
-
-Here mainly we use Open closed principle
-
-✅ Factory Pattern: A Better Approach
-------------------------------------------
-public interface INotification
-{
-    void Send(string message);
-}
-
-public class EmailNotification : INotification
-{
-    public void Send(string message)
-    {
-        Console.WriteLine($"Email: {message}");
-    }
-}
-
-public class SMSNotification : INotification
-{
-    public void Send(string message)
-    {
-        Console.WriteLine($"SMS: {message}");
-    }
-}
-
-3️⃣ Step 3: Create a Factory to Generate Objects
-
-public class NotificationFactory
-{
-    public static INotification CreateNotification(string type)
-    {
-        if (type.Equals("Email", StringComparison.OrdinalIgnoreCase))
-        {
-            return new EmailNotification();
-        }
-        else if (type.Equals("SMS", StringComparison.OrdinalIgnoreCase))
-        {
-            return new SMSNotification();
-        }
-        else
-        {
-            throw new Exception("Invalid notification type.");
-        }
-    }
-}
-4️⃣ Step 4: Use the Factory in the Main Code
-class Program
-{
-    static void Main()
-    {
-        INotification notification = NotificationFactory.CreateNotification("Email");
-        notification.Send("Hello, Factory Pattern!");
-
-        INotification smsNotification = NotificationFactory.CreateNotification("SMS");
-        smsNotification.Send("Hello via SMS!");
-    }
-}
-
-OR
 
 public interface  IShape
 {
@@ -283,6 +202,100 @@ class Test
 
         IShape s1 = Program.GetShape("Cube");
         s1.Draw();
+    }
+}
+--------------------
+
+Abstract Factory
+-------------------------
+Abstract Factory is a creational pattern that provides an interface to create families of related objects without specifying their concrete classes.
+
+Abstract Factory – Car Example
+We’ll create two families of cars: ElectricCar and PetrolCar.
+Each family has two types: Sedan and SUV.
+
+
+public interface ISedan
+{
+    public void Drive();
+}
+
+public interface ISuv
+{ 
+    public void OffRoadDrive();
+}
+
+public class ElectricCar : ISedan, ISuv
+{
+    public void Drive()
+    {
+        Console.WriteLine("Driving electric car on the road.");
+    }
+    public void OffRoadDrive()
+    {
+        Console.WriteLine("Driving electric car off-road.");
+    }
+}
+
+public class PetrolCar : ISedan, ISuv
+{
+    public void Drive()
+    {
+        Console.WriteLine("Driving petrol car on the road.");
+    }
+    public void OffRoadDrive()
+    {
+        Console.WriteLine("Driving petrol car off-road.");
+    }
+}
+
+//Abstract Factory
+public interface ICarFactory
+{
+   public ISedan CreateSedan();
+   public ISuv CreateSuv();
+}
+
+public class ElectricCarFactory : ICarFactory
+{
+    public ISedan CreateSedan()
+    {
+        return new ElectricCar();
+    }
+    public ISuv CreateSuv()
+    {
+        return new ElectricCar();
+    }
+}
+
+public class PetrolCarFactory : ICarFactory
+{
+    public ISedan CreateSedan()
+    {
+        return new PetrolCar();
+    }
+    public ISuv CreateSuv()
+    {
+        return new PetrolCar();
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        ICarFactory c = new ElectricCarFactory();
+        ISedan sedan = c.CreateSedan();
+        sedan.Drive();
+        ISuv suv = c.CreateSuv();
+        suv.OffRoadDrive();
+
+        c = new PetrolCarFactory();
+        sedan = c.CreateSedan();
+        sedan.Drive();
+        suv = c.CreateSuv();
+        suv.OffRoadDrive();
+
     }
 }
 
