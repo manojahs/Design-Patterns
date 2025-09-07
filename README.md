@@ -81,19 +81,6 @@ public sealed class Singleton
     }
 }
 
-// Usage
-class Program
-{
-    static void Main()
-    {
-        var obj1 = Singleton.Instance;
-        var obj2 = Singleton.Instance;
-
-        obj1.ShowMessage();
-        Console.WriteLine(obj1 == obj2); // True (always same object)
-    }
-}
-
 ✅ Thread-Safe Singleton (Lock-based)
 ----------------------------------------
 Only one thread will enter multiple thread cannot enter thats why we have used lock
@@ -127,20 +114,39 @@ public sealed class Singleton
     }
 }
 
-// Usage
-class Program
+4) Eager Initialization
+-------------------------
+public sealed class Singleton
 {
-    static void Main()
-    {
-        var obj1 = Singleton.Instance;
-        var obj2 = Singleton.Instance;
-
-        obj1.ShowMessage();
-        Console.WriteLine(obj1 == obj2); // True
-    }
+    private static readonly Singleton _instance = new Singleton();
+    private Singleton() { }
+    public static Singleton Instance => _instance;
 }
 
+5) Double Check Locking
+--------------------------
 
+public sealed class Singleton
+{
+    private static Singleton _instance;
+    private static readonly object _lock = new object();
+    private Singleton() { }
+    public static Singleton Instance
+    {
+        get
+        {
+            if (_instance == null)   // first check (no locking)
+            {
+                lock (_lock)
+                {
+                    if (_instance == null) // second check (with locking)
+                        _instance = new Singleton();
+                }
+            }
+            return _instance;
+        }
+    }
+}
 
 
 
