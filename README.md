@@ -148,16 +148,11 @@ public sealed class Singleton
     }
 }
 
-
-
-
-
-
-
-
-
-
-
+Factory Pattern
+-------------------
+Encapsulation → Hides object creation logic.
+Loose Coupling → Client depends on abstraction, not concrete classes.
+Open/Closed Principle → Easy to add new product types without changing client code.
 
 
 problem
@@ -235,6 +230,59 @@ class Program
 
         INotification smsNotification = NotificationFactory.CreateNotification("SMS");
         smsNotification.Send("Hello via SMS!");
+    }
+}
+
+OR
+
+public interface  IShape
+{
+    public void Draw();
+}
+
+public class Square : IShape
+{
+    public  void Draw()
+    {
+        Console.WriteLine("This is Square");
+    }
+}
+
+public class Cube : IShape
+{
+    public  void Draw()
+    {
+        Console.WriteLine("This is Cube");
+    }
+}
+
+public class Program
+{ 
+    public static IShape GetShape(string type)
+    {
+
+        switch (type)
+        {
+            case "Square":
+                return new Square();
+            case "Cube":
+                return new Cube();
+            default:
+                throw new ArgumentException("Invalid shape type");
+
+        }
+    }
+}
+
+class Test
+{
+    public static void Main()
+    {
+        IShape p = Program.GetShape("Square");
+        p.Draw();
+
+        IShape s1 = Program.GetShape("Cube");
+        s1.Draw();
     }
 }
 
