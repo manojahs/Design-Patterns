@@ -7,6 +7,34 @@ There are three main categories of design patterns:
 2️⃣ Structural Patterns → Deals with class relationships (e.g., Adapter, Decorator).
 3️⃣ Behavioral Patterns → Deals with object interaction (e.g., Observer, Strategy).
 
+
+1) Singleton -> Only one instance a class exists in the entire application
+----------------
+Real-world example: Government / Prime Minister → Only one at a time, globally accessible.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 problem
 ----------
 
