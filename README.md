@@ -1,5 +1,5 @@
 # Design-Patterns
-
+```
 Types of Design Patterns
 There are three main categories of design patterns:
 
@@ -12,6 +12,47 @@ There are three main categories of design patterns:
 ----------------
 Real-world example: Government / Prime Minister → Only one at a time, globally accessible.
 
+Easy Singleton (Lazy Initialization)
+--------------------------------------
+
+public class Singleton
+{
+    // Step 1: Create a static instance
+    private static Singleton _instance;
+
+    // Step 2: Make constructor private so no one can create object using "new"
+    private Singleton() { }
+
+    // Step 3: Provide a global access point
+    public static Singleton Instance
+    {
+        get
+        {
+            if (_instance == null)   // create only if not created
+                _instance = new Singleton();
+            return _instance;
+        }
+    }
+
+    public void ShowMessage()
+    {
+        Console.WriteLine("Hello from Singleton!");
+    }
+}
+
+// Usage
+class Program
+{
+    static void Main()
+    {
+        var obj1 = Singleton.Instance;
+        var obj2 = Singleton.Instance;
+
+        obj1.ShowMessage();
+
+        Console.WriteLine(obj1 == obj2); // True (both are same instance)
+    }
+}
 
 
 
@@ -113,5 +154,5 @@ class Program
     }
 }
 
-
+```
 
