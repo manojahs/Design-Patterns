@@ -61,7 +61,38 @@ Static variable → holds only one object.
 Static property → returns that single object.
 When you call Singleton.Instance, it always gives the same object.
 
+✅ Thread-Safe Singleton (with Lazy<T>)
+----------------------------------------
+public sealed class Singleton
+{
+    // Step 1: Lazy<T> ensures thread-safety automatically
+    private static readonly Lazy<Singleton> _instance =
+        new Lazy<Singleton>(() => new Singleton());
 
+    // Step 2: Private constructor so no one can create with "new"
+    private Singleton() { }
+
+    // Step 3: Global access point
+    public static Singleton Instance => _instance.Value;
+
+    public void ShowMessage()
+    {
+        Console.WriteLine("Hello from Thread-Safe Singleton!");
+    }
+}
+
+// Usage
+class Program
+{
+    static void Main()
+    {
+        var obj1 = Singleton.Instance;
+        var obj2 = Singleton.Instance;
+
+        obj1.ShowMessage();
+        Console.WriteLine(obj1 == obj2); // True (always same object)
+    }
+}
 
 
 
