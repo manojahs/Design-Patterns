@@ -299,5 +299,16 @@ public class Program
     }
 }
 
+Factory Method
+----------------
+
+✅ Definition
+
+Factory Method is a creational pattern.
+It defines an interface for creating an object, but lets subclasses decide which concrete object to create.
+Produces one product at a time, not a family of products.
+
+
+
 ```
 
