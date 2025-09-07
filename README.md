@@ -15,7 +15,7 @@ Real-world example: Government / Prime Minister → Only one at a time, globally
 Easy Singleton (Lazy Initialization)
 --------------------------------------
 
-public class Singleton
+public sealed class Singleton
 {
     // Step 1: Create a static instance
     private static Singleton _instance;
