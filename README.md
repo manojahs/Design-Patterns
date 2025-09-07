@@ -308,7 +308,59 @@ Factory Method is a creational pattern.
 It defines an interface for creating an object, but lets subclasses decide which concrete object to create.
 Produces one product at a time, not a family of products.
 
+public interface IShape
+{
+    public void Draw();
+}
 
+public class Circle : IShape
+{
+    public void Draw()
+    {
+        Console.WriteLine("Drawing a Circle");
+    }
+}
+public class Square : IShape
+{
+    public void Draw()
+    {
+        Console.WriteLine("Drawing a Square");
+    }
+}
+
+public abstract class Factory
+{
+    public abstract IShape CreateShape();
+}
+
+public class CreateCircle : Factory
+{
+    public override IShape CreateShape()
+    {
+       return new Circle();
+    }
+}
+
+public class CreateSquare : Factory
+{
+    public override IShape CreateShape()
+    {
+        return new Square();
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        Factory factory = new CreateCircle();
+        IShape shape = factory.CreateShape();
+        shape.Draw();
+        factory = new CreateSquare();
+        shape = factory.CreateShape();
+        shape.Draw();
+    }
+}
 
 ```
 
