@@ -362,5 +362,82 @@ public class Program
     }
 }
 
+Strategy Pattern
+----------------------
+Defines a family of algorithms (strategies).
+Encapsulates each one.
+Makes them interchangeable at runtime without changing the main logic.
+
+Imagine you’re building an e-commerce app.
+A customer can pay using:
+Credit Card
+PayPal
+Google Pay
+
+Instead of writing if-else for each payment type, we use Strategy Pattern.
+
+public interface IStrategy
+{
+    public void Pattern(decimal amount);
+}
+
+public class GooglePay : IStrategy
+{
+    public void Pattern(decimal amount)
+    {
+        Console.WriteLine($"Google pay Amount is " + amount);
+    }
+}
+public class CreditCard : IStrategy
+{
+    public void Pattern(decimal amount)
+    {
+        Console.WriteLine($"Credit card Amount is " + amount);
+    }
+}
+
+public class ShoppingCart
+{
+    private IStrategy _strategy;
+
+    public void setStrategy(IStrategy strategy)
+    {
+        _strategy = strategy;
+    }
+    public void Checkout(decimal Amount)
+    {
+        _strategy.Pattern(Amount);
+    }
+
+}
+
+public class  Program
+{
+    public static void Main()
+    {
+       ShoppingCart cart = new ShoppingCart();
+       cart.setStrategy(new GooglePay());
+       cart.Checkout(10);
+
+       cart.setStrategy(new CreditCard());
+       cart.Checkout(200);
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 
